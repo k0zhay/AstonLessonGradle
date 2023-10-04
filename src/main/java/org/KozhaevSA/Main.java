@@ -1,3 +1,6 @@
+/*
+Тут ничего интересного, смотри MyMath и FactorialTest
+*/
 package org.KozhaevSA;
 
 public class Main {
