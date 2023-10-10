@@ -7,12 +7,14 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.time.Duration;
 
 public class MtsTest {
     private static WebDriver driver;
+    private static WebDriverWait wait;
 
     @BeforeAll
     public static void startClass() {
@@ -28,25 +30,34 @@ public class MtsTest {
     @BeforeEach
     public void setUp() {
         driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        driver.manage().window().maximize();
         driver.get("https://www.mts.by");
         driver.manage().deleteAllCookies();
+        driver.findElement(By.cssSelector("button.cookie__close")).click();
     }
 
     @AfterEach
     public void tearDown() {
+        driver.manage().deleteAllCookies();
         driver.quit();
     }
 
     @Test
     @DisplayName("Задание №1")
-    public void checkName() {
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.mts.by");
-
+    public void checkName() throws UnsupportedEncodingException {
         List<WebElement> onlinePaymentBlock = driver.
                 findElements(By.cssSelector(".pay__wrapper h2"));
+
+        /*
+         * Вместо ожидаемого текста в строке expected записывался набор непонятных
+         * символов, поэтому эксклюзивно для неё я перевел строку в байты, а потом
+         * со сменной кодировки - обратно в строку (примечание: если менять
+         * кодировку глобально, то ломался текст в @DisplayName)
+         */
         String expected = "Онлайн пополнение\nбез комиссии";
+        byte[] array = expected.getBytes("windows-1251");
+        expected = new String(array, "UTF-8");
         String actual = onlinePaymentBlock.stream()
                 .map(WebElement::getText).collect(Collectors.joining());
         Assertions.assertEquals(expected, actual);
@@ -62,34 +73,40 @@ public class MtsTest {
     @Test
     @DisplayName("Задание №3")
     public void checkLink() {
-        WebElement moreDetailLink = driver.findElement(By.cssSelector("div.pay__wrapper a"));
-        moreDetailLink.click();
-        new WebDriverWait(driver,Duration.ofSeconds(5)).until(
-                ExpectedConditions.urlContains(
-                        "/poryadok-oplaty-i-bezopasnost-internet-platezhey/"));
+        WebElement moreDetailsButton = driver.findElement(By.cssSelector("div.pay__wrapper a"));
+        moreDetailsButton.click();
+        wait.until(ExpectedConditions.urlContains("/poryadok-oplaty"));
     }
 
     @Test
     @DisplayName("Задание №4")
-    @Disabled
     public void onlinePaymentTest() {
-        WebElement phoneNumber = driver
-                .findElement(By.id("connection-phone"));
+        /*
+         * Последовательно введем все данные (разные локаторы - для примера)
+         * и нажмем кнопку "Продолжить"
+         */
+        WebElement phoneNumber = driver.findElement(
+                By.id("connection-phone"));
         phoneNumber.sendKeys("297777777");
-        WebElement money = driver
-                .findElement(By.xpath("//input[@class=\"total_rub\"]"));
+        WebElement money = driver.findElement(
+                By.xpath("//input[@class=\"total_rub\"]"));
         money.sendKeys("1");
-        WebElement email = driver
-                .findElement(By.cssSelector("input.email"));
+        WebElement email = driver.findElement(
+                By.cssSelector("input.email"));
         email.sendKeys("kozhaev-sergei@mail.ru");
-        WebElement enterButton = driver
-                .findElement(By.name("Продолжить"));
+        WebElement enterButton = driver.findElement(
+                By.xpath("//*[@id=\"pay-connection\"]/button"));
         enterButton.click();
 
-//        WebDriver paymentFrame = driver.switchTo().frame(
-//                driver.findElement(By.cssSelector("iframe.bepaid-iframe")));
-//        WebElement paymentElement = paymentFrame.
-//                findElement(By.cssSelector("section.payment-page_pays"));
-//        Assertions.assertTrue(paymentElement.isDisplayed());
+        // Проверим, что открылся фрейм для оплаты
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector("div.bepaid-app__container")));
+        WebDriver paymentFrame = driver.switchTo().frame(driver.findElement(
+                By.cssSelector("iframe.bepaid-iframe")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector("section.payment-page_pays")));
+        WebElement paymentElement = paymentFrame.findElement(
+                By.cssSelector("section.payment-page_pays"));
+        Assertions.assertTrue(paymentElement.isDisplayed());
     }
 }
