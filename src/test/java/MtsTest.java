@@ -1,3 +1,17 @@
+/*
+ * Не уверен, какая будет кодировка у Вас, и сохранится ли она при
+ * скачивании проекта с GitHub на другое устройство, поэтому оставлю здесь
+ * следующее примечание:
+ *
+ * При работе над заданием №2 я использовал локатор cssSelector, в котором
+ * содержится кириллица. Программа считывает её с ошибками, поэтому в правом
+ * нижнем углу окна Intellij IDEA я сменил кодировку с UTF-8 на windows-1251.
+ * При этом возникает ошибка чтения текста на русском в @DisplayName(), но на
+ * работоспособность программы это не влияет.
+ *
+ * Если все же возникнет ошибка чтения кириллицы, добавлю пару строк кода
+ * для исправления этого. Просто пока не знаю, есть ли в этом необходимость.
+ */
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -6,11 +20,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.time.Duration;
+
 
 public class MtsTest {
     private static WebDriver driver;
@@ -31,9 +44,10 @@ public class MtsTest {
     public void setUp() {
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.manage().window().maximize();
         driver.get("https://www.mts.by");
         driver.manage().deleteAllCookies();
+        driver.manage().window().maximize();
+        // Перед запуском каждого теста принимаем и закрываем окно cookie
         driver.findElement(By.cssSelector("button.cookie__close")).click();
     }
 
@@ -44,46 +58,67 @@ public class MtsTest {
     }
 
     @Test
-    @DisplayName("Р—Р°РґР°РЅРёРµ в„–1")
-    public void checkName() throws UnsupportedEncodingException {
+    @DisplayName("Task 1")
+    public void checkName() {
+        /*
+         * Находим элемент, где должен располагаться искомый текст, и
+         * сравниваем его с ожидаемым текстом
+         */
         List<WebElement> onlinePaymentBlock = driver.
                 findElements(By.cssSelector(".pay__wrapper h2"));
-
-        /*
-         * Р’РјРµСЃС‚Рѕ РѕР¶РёРґР°РµРјРѕРіРѕ С‚РµРєСЃС‚Р° РІ СЃС‚СЂРѕРєРµ expected Р·Р°РїРёСЃС‹РІР°Р»СЃСЏ РЅР°Р±РѕСЂ РЅРµРїРѕРЅСЏС‚РЅС‹С…
-         * СЃРёРјРІРѕР»РѕРІ, РїРѕСЌС‚РѕРјСѓ СЌРєСЃРєР»СЋР·РёРІРЅРѕ РґР»СЏ РЅРµС‘ СЏ РїРµСЂРµРІРµР» СЃС‚СЂРѕРєСѓ РІ Р±Р°Р№С‚С‹, Р° РїРѕС‚РѕРј
-         * СЃРѕ СЃРјРµРЅРЅРѕР№ РєРѕРґРёСЂРѕРІРєРё - РѕР±СЂР°С‚РЅРѕ РІ СЃС‚СЂРѕРєСѓ (РїСЂРёРјРµС‡Р°РЅРёРµ: РµСЃР»Рё РјРµРЅСЏС‚СЊ
-         * РєРѕРґРёСЂРѕРІРєСѓ РіР»РѕР±Р°Р»СЊРЅРѕ, С‚Рѕ Р»РѕРјР°Р»СЃСЏ С‚РµРєСЃС‚ РІ @DisplayName)
-         */
-        String expected = "РћРЅР»Р°Р№РЅ РїРѕРїРѕР»РЅРµРЅРёРµ\nР±РµР· РєРѕРјРёСЃСЃРёРё";
-        byte[] array = expected.getBytes("windows-1251");
-        expected = new String(array, "UTF-8");
+        String expected = "Онлайн пополнение\nбез комиссии";
         String actual = onlinePaymentBlock.stream()
                 .map(WebElement::getText).collect(Collectors.joining());
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("Р—Р°РґР°РЅРёРµ в„–2")
-    @Disabled
+    @DisplayName("Task 2")
     public void checkLogo() {
-
+        /*
+         * Проверяем наличие логотипов платежных систем
+         */
+        WebElement visaLogo = driver.findElement(
+                By.cssSelector("[alt=\"Visa\"]"));
+        WebElement verifiedByVisaLogo = driver.findElement(
+                By.cssSelector("[alt=\"Verified By Visa\"]"));
+        WebElement masterCardLogo = driver.findElement(
+                By.cssSelector("[alt=\"MasterCard\"]"));
+        WebElement masterCardSecureCodeLogo = driver.findElement(
+                By.cssSelector("[alt=\"MasterCard Secure Code\"]"));
+        WebElement belkartLogo = driver.findElement(
+                By.cssSelector("[alt=\"Белкарт\"]"));
+        WebElement mirLogo = driver.findElement(
+                By.cssSelector("[alt=\"МИР\"]"));
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(visaLogo.isDisplayed()),
+                () -> Assertions.assertTrue(verifiedByVisaLogo.isDisplayed()),
+                () -> Assertions.assertTrue(masterCardLogo.isDisplayed()),
+                () -> Assertions.assertTrue(masterCardSecureCodeLogo.isDisplayed()),
+                () -> Assertions.assertTrue(belkartLogo.isDisplayed()),
+                () -> Assertions.assertTrue(mirLogo.isDisplayed())
+        );
     }
 
     @Test
-    @DisplayName("Р—Р°РґР°РЅРёРµ в„–3")
+    @DisplayName("Task 3")
     public void checkLink() {
-        WebElement moreDetailsButton = driver.findElement(By.cssSelector("div.pay__wrapper a"));
+        /*
+         * Нажимаем кнопку "Подробнее о сервисе" и проверяем, что открылась
+         * ссылка и подробной информацией об оплате
+         */
+        WebElement moreDetailsButton = driver.findElement(
+                By.cssSelector("div.pay__wrapper a"));
         moreDetailsButton.click();
-        wait.until(ExpectedConditions.urlContains("/poryadok-oplaty"));
+        wait.until(ExpectedConditions.urlContains("/help/poryadok-oplaty"));
     }
 
     @Test
-    @DisplayName("Р—Р°РґР°РЅРёРµ в„–4")
+    @DisplayName("Task 4")
     public void onlinePaymentTest() {
         /*
-         * РџРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕ РІРІРµРґРµРј РІСЃРµ РґР°РЅРЅС‹Рµ (СЂР°Р·РЅС‹Рµ Р»РѕРєР°С‚РѕСЂС‹ - РґР»СЏ РїСЂРёРјРµСЂР°)
-         * Рё РЅР°Р¶РјРµРј РєРЅРѕРїРєСѓ "РџСЂРѕРґРѕР»Р¶РёС‚СЊ"
+         * Последовательно вводим все данные (разные локаторы - для примера)
+         * и нажимаем кнопку "Продолжить"
          */
         WebElement phoneNumber = driver.findElement(
                 By.id("connection-phone"));
@@ -98,7 +133,7 @@ public class MtsTest {
                 By.xpath("//*[@id=\"pay-connection\"]/button"));
         enterButton.click();
 
-        // РџСЂРѕРІРµСЂРёРј, С‡С‚Рѕ РѕС‚РєСЂС‹Р»СЃСЏ С„СЂРµР№Рј РґР»СЏ РѕРїР»Р°С‚С‹
+        // Проверяем, что открылся фрейм для оплаты
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector("div.bepaid-app__container")));
         WebDriver paymentFrame = driver.switchTo().frame(driver.findElement(
