@@ -22,8 +22,9 @@ test {
     useJUnitPlatform()
 }
 
-compileJava.options.encoding = 'UTF-8' // устанавливает кодировку для компилируемого кода
-javadoc.options.encoding = 'windows-1251' // устанавливает кодировку для генерируемой документации
+// Без этих строк возникают ошибки при чтении строк на кириллице
+compileJava.options.encoding = 'UTF-8'
+javadoc.options.encoding = 'windows-1251'
 compileTestJava.options.encoding = 'windows-1251'
 
 tasks.withType(JavaCompile).configureEach {
