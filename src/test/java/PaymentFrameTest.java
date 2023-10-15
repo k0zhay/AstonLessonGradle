@@ -34,7 +34,7 @@ public class PaymentFrameTest {
         driver.get("https://www.mts.by");
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
-        // Перед запуском каждого теста принимаем и закрываем окно cookie
+        // РџРµСЂРµРґ Р·Р°РїСѓСЃРєРѕРј РєР°Р¶РґРѕРіРѕ С‚РµСЃС‚Р° РїСЂРёРЅРёРјР°РµРј Рё Р·Р°РєСЂС‹РІР°РµРј РѕРєРЅРѕ cookie
         driver.findElement(By.cssSelector("button.cookie__close")).click();
     }
 
@@ -47,12 +47,12 @@ public class PaymentFrameTest {
     @Test
     @DisplayName("Online Payment Frame Test")
     public void paymentFrameTest() {
-        // Определяем вводимые данные
+        // РћРїСЂРµРґРµР»СЏРµРј РІРІРѕРґРёРјС‹Рµ РґР°РЅРЅС‹Рµ
         String phoneNumber = "297777777";
         String money = "1.99";
         String email = "kozhaev-sergei@mail.ru";
 
-        // Вводим данные в соответствующие поля и нажимаем продолжить
+        // Р’РІРѕРґРёРј РґР°РЅРЅС‹Рµ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ РїРѕР»СЏ Рё РЅР°Р¶РёРјР°РµРј РїСЂРѕРґРѕР»Р¶РёС‚СЊ
         WebElement phoneNumberInput = driver.findElement(
                 By.id("connection-phone"));
         phoneNumberInput.sendKeys(phoneNumber);
@@ -66,7 +66,7 @@ public class PaymentFrameTest {
                 By.xpath("//*[@id=\"pay-connection\"]/button"));
         enterButton.click();
 
-        // Проверяем, что открылся фрейм для оплаты
+        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РѕС‚РєСЂС‹Р»СЃСЏ С„СЂРµР№Рј РґР»СЏ РѕРїР»Р°С‚С‹
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector("div.bepaid-app__container")));
         WebDriver paymentFrame = driver.switchTo().frame(driver.findElement(
@@ -74,7 +74,7 @@ public class PaymentFrameTest {
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector("section.payment-page_pays")));
 
-        // Находим элементы с записанными ранее данными
+        // РќР°С…РѕРґРёРј СЌР»РµРјРµРЅС‚С‹ СЃ Р·Р°РїРёСЃР°РЅРЅС‹РјРё СЂР°РЅРµРµ РґР°РЅРЅС‹РјРё
         WebElement phoneNumberCheck = driver.findElement(
                 By.cssSelector("p.header__payment-info"));
         WebElement moneyCheck = driver.findElement(
@@ -82,13 +82,13 @@ public class PaymentFrameTest {
         WebElement paymentButton = driver.findElement(
                 By.cssSelector("button.ng-star-inserted"));
 
-        // Надписи для незаполненных полей реквизитов карты
-        String cardNumber = "Номер карты";
-        String validityPeriod = "Срок действия";
+        // РќР°РґРїРёСЃРё РґР»СЏ РЅРµР·Р°РїРѕР»РЅРµРЅРЅС‹С… РїРѕР»РµР№ СЂРµРєРІРёР·РёС‚РѕРІ РєР°СЂС‚С‹
+        String cardNumber = "РќРѕРјРµСЂ РєР°СЂС‚С‹";
+        String validityPeriod = "РЎСЂРѕРє РґРµР№СЃС‚РІРёСЏ";
         String cvc = "CVC";
-        String cardholder = "Имя держателя (как на карте)";
+        String cardholder = "РРјСЏ РґРµСЂР¶Р°С‚РµР»СЏ (РєР°Рє РЅР° РєР°СЂС‚Рµ)";
 
-        // Находим тексты в полях для ввода реквизитов карты
+        // РќР°С…РѕРґРёРј С‚РµРєСЃС‚С‹ РІ РїРѕР»СЏС… РґР»СЏ РІРІРѕРґР° СЂРµРєРІРёР·РёС‚РѕРІ РєР°СЂС‚С‹
         String cardNumberInputField = driver.findElement(
                 By.cssSelector("label.ng-tns-c46-1")).getText();
         String validityPeriodInputField = driver.findElement(

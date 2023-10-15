@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class OnlinePaymentFieldsTest {
     private static WebDriver driver;
 
-    // Ñëåäóþùèå äâå ñòðîêè åñòü âî âñåõ âàðèàíòàõ, ïîýòîìó âûïèøåì èõ îòäåëüíî
-    String money = "Ñóììà";
-    String email = "E-mail äëÿ îòïðàâêè ÷åêà";
+    // Ð¡Ð»ÐµÐ´ÑƒÑŽÑ‰Ð¸Ðµ Ð´Ð²Ðµ ÑÑ‚Ñ€Ð¾ÐºÐ¸ ÐµÑÑ‚ÑŒ Ð²Ð¾ Ð²ÑÐµÑ… Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð°Ñ…, Ð¿Ð¾ÑÑ‚Ð¾Ð¼Ñƒ Ð²Ñ‹Ð¿Ð¸ÑˆÐµÐ¼ Ð¸Ñ… Ð¾Ñ‚Ð´ÐµÐ»ÑŒÐ½Ð¾
+    String money = "Ð¡ÑƒÐ¼Ð¼Ð°";
+    String email = "E-mail Ð´Ð»Ñ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ¸ Ñ‡ÐµÐºÐ°";
 
     @BeforeAll
     public static void startClass() {
@@ -31,10 +31,10 @@ public class OnlinePaymentFieldsTest {
         driver.get("https://www.mts.by");
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
-        // Ïåðåä çàïóñêîì êàæäîãî òåñòà ïðèíèìàåì è çàêðûâàåì îêíî cookie
+        // ÐŸÐµÑ€ÐµÐ´ Ð·Ð°Ð¿ÑƒÑÐºÐ¾Ð¼ ÐºÐ°Ð¶Ð´Ð¾Ð³Ð¾ Ñ‚ÐµÑÑ‚Ð° Ð¿Ñ€Ð¸Ð½Ð¸Ð¼Ð°ÐµÐ¼ Ð¸ Ð·Ð°ÐºÑ€Ñ‹Ð²Ð°ÐµÐ¼ Ð¾ÐºÐ½Ð¾ cookie
         driver.findElement(By.cssSelector("button.cookie__close")).click();
 
-        // Îïðåäåëÿåì êíîïêó, íà êîòîðîé îòîáðàæàåòñÿ âûáðàííàÿ óñëóãà
+        // ÐžÐ¿Ñ€ÐµÐ´ÐµÐ»ÑÐµÐ¼ ÐºÐ½Ð¾Ð¿ÐºÑƒ, Ð½Ð° ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¹ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÑ‚ÑÑ Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ð°Ñ ÑƒÑÐ»ÑƒÐ³Ð°
         WebElement selectHeaderButton = driver.findElement(
                 By.cssSelector("span.select__now"));
         selectHeaderButton.click();
@@ -50,20 +50,20 @@ public class OnlinePaymentFieldsTest {
     @DisplayName("Check Connection Services Fields")
     public void checkConnectionServicesFields() {
         /*
-         * Ñïèñîê óñëóã â âûïàäàþùåì ñïèñêå èäåò â ñòðîãî îïðåäåëåííîì ïîðÿäêå,
-         * ïîýòîìó çäåñü è äàëåå äëÿ âûáîðà âàðèàíòà â âûïàäàþùåì ñïèñêå
-         * èñïîëüçóåì nth-child() (è ðàçíîîáðàçèÿ ðàäè)
+         * Ð¡Ð¿Ð¸ÑÐ¾Ðº ÑƒÑÐ»ÑƒÐ³ Ð² Ð²Ñ‹Ð¿Ð°Ð´Ð°ÑŽÑ‰ÐµÐ¼ ÑÐ¿Ð¸ÑÐºÐµ Ð¸Ð´ÐµÑ‚ Ð² ÑÑ‚Ñ€Ð¾Ð³Ð¾ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð½Ð¾Ð¼ Ð¿Ð¾Ñ€ÑÐ´ÐºÐµ,
+         * Ð¿Ð¾ÑÑ‚Ð¾Ð¼Ñƒ Ð·Ð´ÐµÑÑŒ Ð¸ Ð´Ð°Ð»ÐµÐµ Ð´Ð»Ñ Ð²Ñ‹Ð±Ð¾Ñ€Ð° Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð° Ð² Ð²Ñ‹Ð¿Ð°Ð´Ð°ÑŽÑ‰ÐµÐ¼ ÑÐ¿Ð¸ÑÐºÐµ
+         * Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÐ¼ nth-child() (Ð¸ Ñ€Ð°Ð·Ð½Ð¾Ð¾Ð±Ñ€Ð°Ð·Ð¸Ñ Ñ€Ð°Ð´Ð¸)
          */
         WebElement connection = driver.findElement(
                 By.cssSelector(".select__item:nth-child(1)"));
         connection.click();
 
-        // Îæèäàåìîå ñîäåðæèìîå ïîëåé èç âàðèàíòà "Óñëóãè ñâÿçè"
-        String phone = "Íîìåð òåëåôîíà";
-        String money = "Ñóììà";
-        String email = "E-mail äëÿ îòïðàâêè ÷åêà";
+        // ÐžÐ¶Ð¸Ð´Ð°ÐµÐ¼Ð¾Ðµ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¿Ð¾Ð»ÐµÐ¹ Ð¸Ð· Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð° "Ð£ÑÐ»ÑƒÐ³Ð¸ ÑÐ²ÑÐ·Ð¸"
+        String phone = "ÐÐ¾Ð¼ÐµÑ€ Ñ‚ÐµÐ»ÐµÑ„Ð¾Ð½Ð°";
+        String money = "Ð¡ÑƒÐ¼Ð¼Ð°";
+        String email = "E-mail Ð´Ð»Ñ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ¸ Ñ‡ÐµÐºÐ°";
 
-        // Ôàêòè÷åñêîå ñîäåðæèìîå ïîëåé èç âàðèàíòà "Óñëóãè ñâÿçè"
+        // Ð¤Ð°ÐºÑ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ðµ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¿Ð¾Ð»ÐµÐ¹ Ð¸Ð· Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð° "Ð£ÑÐ»ÑƒÐ³Ð¸ ÑÐ²ÑÐ·Ð¸"
         String phonePlaceholder = driver.findElement(
                 By.cssSelector("#connection-phone"))
                 .getAttribute("placeholder");
@@ -74,7 +74,7 @@ public class OnlinePaymentFieldsTest {
                 By.cssSelector("#connection-email"))
                 .getAttribute("placeholder");
 
-        // Ñðàâíåíèå îæèäàåìîãî è ôàêòè÷åñêîãî òåêñòà ïîëåé "Óñëóãè ñâÿçè"
+        // Ð¡Ñ€Ð°Ð²Ð½ÐµÐ½Ð¸Ðµ Ð¾Ð¶Ð¸Ð´Ð°ÐµÐ¼Ð¾Ð³Ð¾ Ð¸ Ñ„Ð°ÐºÑ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ð³Ð¾ Ñ‚ÐµÐºÑÑ‚Ð° Ð¿Ð¾Ð»ÐµÐ¹ "Ð£ÑÐ»ÑƒÐ³Ð¸ ÑÐ²ÑÐ·Ð¸"
         assertAll(
                 () -> assertEquals(phone, phonePlaceholder),
                 () -> assertEquals(money, moneyPlaceholder),
@@ -86,17 +86,17 @@ public class OnlinePaymentFieldsTest {
     @DisplayName("Check Home Internet Fields")
     public void checkHomeInternetFields() {
         /*
-         * Ñïèñîê óñëóã â âûïàäàþùåì ñïèñêå èäåò â ñòðîãî îïðåäåëåííîì ïîðÿäêå,
-         * ïîýòîìó èñïîëüçóåì nth-child() (çàîäíî âñïîìíþ, êàê îí ðàáîòàåò)
+         * Ð¡Ð¿Ð¸ÑÐ¾Ðº ÑƒÑÐ»ÑƒÐ³ Ð² Ð²Ñ‹Ð¿Ð°Ð´Ð°ÑŽÑ‰ÐµÐ¼ ÑÐ¿Ð¸ÑÐºÐµ Ð¸Ð´ÐµÑ‚ Ð² ÑÑ‚Ñ€Ð¾Ð³Ð¾ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð½Ð¾Ð¼ Ð¿Ð¾Ñ€ÑÐ´ÐºÐµ,
+         * Ð¿Ð¾ÑÑ‚Ð¾Ð¼Ñƒ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÐ¼ nth-child() (Ð·Ð°Ð¾Ð´Ð½Ð¾ Ð²ÑÐ¿Ð¾Ð¼Ð½ÑŽ, ÐºÐ°Ðº Ð¾Ð½ Ñ€Ð°Ð±Ð¾Ñ‚Ð°ÐµÑ‚)
          */
         WebElement internet = driver.findElement(
                 By.cssSelector(".select__item:nth-child(2)"));
         internet.click();
 
-        // Îæèäàåìîå ñîäåðæèìîå ïîëåé èç âàðèàíòà "Óñëóãè ñâÿçè"
-        String phone = "Íîìåð àáîíåíòà";
+        // ÐžÐ¶Ð¸Ð´Ð°ÐµÐ¼Ð¾Ðµ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¿Ð¾Ð»ÐµÐ¹ Ð¸Ð· Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð° "Ð£ÑÐ»ÑƒÐ³Ð¸ ÑÐ²ÑÐ·Ð¸"
+        String phone = "ÐÐ¾Ð¼ÐµÑ€ Ð°Ð±Ð¾Ð½ÐµÐ½Ñ‚Ð°";
 
-        // Ôàêòè÷åñêîå ñîäåðæèìîå ïîëåé èç âàðèàíòà "Óñëóãè ñâÿçè"
+        // Ð¤Ð°ÐºÑ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ðµ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¿Ð¾Ð»ÐµÐ¹ Ð¸Ð· Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð° "Ð£ÑÐ»ÑƒÐ³Ð¸ ÑÐ²ÑÐ·Ð¸"
         String phonePlaceholder = driver.findElement(
                         By.cssSelector("#internet-phone"))
                 .getAttribute("placeholder");
@@ -107,7 +107,7 @@ public class OnlinePaymentFieldsTest {
                         By.cssSelector("#internet-email"))
                 .getAttribute("placeholder");
 
-        // Ñðàâíåíèå îæèäàåìîãî è ôàêòè÷åñêîãî òåêñòà ïîëåé "Óñëóãè ñâÿçè"
+        // Ð¡Ñ€Ð°Ð²Ð½ÐµÐ½Ð¸Ðµ Ð¾Ð¶Ð¸Ð´Ð°ÐµÐ¼Ð¾Ð³Ð¾ Ð¸ Ñ„Ð°ÐºÑ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ð³Ð¾ Ñ‚ÐµÐºÑÑ‚Ð° Ð¿Ð¾Ð»ÐµÐ¹ "Ð£ÑÐ»ÑƒÐ³Ð¸ ÑÐ²ÑÐ·Ð¸"
         assertAll(
                 () -> assertEquals(phone, phonePlaceholder),
                 () -> assertEquals(money, moneyPlaceholder),
@@ -122,10 +122,10 @@ public class OnlinePaymentFieldsTest {
                 By.cssSelector(".select__item:nth-child(3)"));
         instalment.click();
 
-        // Îæèäàåìîå ñîäåðæèìîå ïîëåé èç âàðèàíòà "Óñëóãè ñâÿçè"
-        String score = "Íîìåð ñ÷åòà íà 44";
+        // ÐžÐ¶Ð¸Ð´Ð°ÐµÐ¼Ð¾Ðµ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¿Ð¾Ð»ÐµÐ¹ Ð¸Ð· Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð° "Ð£ÑÐ»ÑƒÐ³Ð¸ ÑÐ²ÑÐ·Ð¸"
+        String score = "ÐÐ¾Ð¼ÐµÑ€ ÑÑ‡ÐµÑ‚Ð° Ð½Ð° 44";
 
-        // Ôàêòè÷åñêîå ñîäåðæèìîå ïîëåé èç âàðèàíòà "Óñëóãè ñâÿçè"
+        // Ð¤Ð°ÐºÑ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ðµ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¿Ð¾Ð»ÐµÐ¹ Ð¸Ð· Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð° "Ð£ÑÐ»ÑƒÐ³Ð¸ ÑÐ²ÑÐ·Ð¸"
         String scorePlaceholder = driver.findElement(
                         By.cssSelector("#score-instalment"))
                 .getAttribute("placeholder");
@@ -136,7 +136,7 @@ public class OnlinePaymentFieldsTest {
                         By.cssSelector("#instalment-email"))
                 .getAttribute("placeholder");
 
-        // Ñðàâíåíèå îæèäàåìîãî è ôàêòè÷åñêîãî òåêñòà ïîëåé "Óñëóãè ñâÿçè"
+        // Ð¡Ñ€Ð°Ð²Ð½ÐµÐ½Ð¸Ðµ Ð¾Ð¶Ð¸Ð´Ð°ÐµÐ¼Ð¾Ð³Ð¾ Ð¸ Ñ„Ð°ÐºÑ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ð³Ð¾ Ñ‚ÐµÐºÑÑ‚Ð° Ð¿Ð¾Ð»ÐµÐ¹ "Ð£ÑÐ»ÑƒÐ³Ð¸ ÑÐ²ÑÐ·Ð¸"
         assertAll(
                 () -> assertEquals(score, scorePlaceholder),
                 () -> assertEquals(money, moneyPlaceholder),
@@ -151,10 +151,10 @@ public class OnlinePaymentFieldsTest {
                 By.cssSelector(".select__item:nth-child(4)"));
         arrears.click();
 
-        // Îæèäàåìîå ñîäåðæèìîå ïîëåé èç âàðèàíòà "Óñëóãè ñâÿçè"
-        String score = "Íîìåð ñ÷åòà íà 2073";
+        // ÐžÐ¶Ð¸Ð´Ð°ÐµÐ¼Ð¾Ðµ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¿Ð¾Ð»ÐµÐ¹ Ð¸Ð· Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð° "Ð£ÑÐ»ÑƒÐ³Ð¸ ÑÐ²ÑÐ·Ð¸"
+        String score = "ÐÐ¾Ð¼ÐµÑ€ ÑÑ‡ÐµÑ‚Ð° Ð½Ð° 2073";
 
-        // Ôàêòè÷åñêîå ñîäåðæèìîå ïîëåé èç âàðèàíòà "Óñëóãè ñâÿçè"
+        // Ð¤Ð°ÐºÑ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ðµ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ð¿Ð¾Ð»ÐµÐ¹ Ð¸Ð· Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð° "Ð£ÑÐ»ÑƒÐ³Ð¸ ÑÐ²ÑÐ·Ð¸"
         String scorePlaceholder = driver.findElement(
                         By.cssSelector("#score-arrears"))
                 .getAttribute("placeholder");
@@ -165,7 +165,7 @@ public class OnlinePaymentFieldsTest {
                         By.cssSelector("#arrears-email"))
                 .getAttribute("placeholder");
 
-        // Ñðàâíåíèå îæèäàåìîãî è ôàêòè÷åñêîãî òåêñòà ïîëåé "Óñëóãè ñâÿçè"
+        // Ð¡Ñ€Ð°Ð²Ð½ÐµÐ½Ð¸Ðµ Ð¾Ð¶Ð¸Ð´Ð°ÐµÐ¼Ð¾Ð³Ð¾ Ð¸ Ñ„Ð°ÐºÑ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ð³Ð¾ Ñ‚ÐµÐºÑÑ‚Ð° Ð¿Ð¾Ð»ÐµÐ¹ "Ð£ÑÐ»ÑƒÐ³Ð¸ ÑÐ²ÑÐ·Ð¸"
         assertAll(
                 () -> assertEquals(score, scorePlaceholder),
                 () -> assertEquals(money, moneyPlaceholder),
