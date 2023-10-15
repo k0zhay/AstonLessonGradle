@@ -37,13 +37,16 @@ public class CheckBasketProductsTest {
         String[] names = new String[3];
         for (int prodIndex = 0; prodIndex < 3; prodIndex++) {
             mainPage.openProdInNewTab(prodIndex);
-            prices[prodIndex] = productPage.getProdPrice(prodIndex);
-            names[prodIndex] = productPage.getProdName(prodIndex);
+            prices[prodIndex] = productPage.getProdPrice();
+            names[prodIndex] = productPage.getProdName();
             productPage.chooseSize();
             productPage.addToBasket();
             productPage.closeProdTab();
         }
         mainPage.goToBasket();
+        BasketPage basketPage = PageFactory
+                .initElements(driver, BasketPage.class);
+
     }
 
 

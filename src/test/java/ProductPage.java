@@ -32,13 +32,13 @@ public class ProductPage {
     @FindBy(css = ".sizes-list__item:nth-child(1)")
     private static WebElement prodSize;
 
-    public int getProdPrice(int prodIndex) {
+    public int getProdPrice() {
         wait.until(ExpectedConditions.visibilityOf(prodPrice));
         return Integer.parseInt(prodPrice.getText()
                 .substring(0, prodPrice.getText().indexOf(' ')));
     }
 
-    public String getProdName(int prodIndex) {
+    public String getProdName() {
         wait.until(ExpectedConditions.visibilityOf(prodName));
         return prodName.getText();
     }
