@@ -24,8 +24,8 @@ test {
 
 // Без этих строк возникают ошибки при чтении строк на кириллице
 compileJava.options.encoding = 'UTF-8'
-javadoc.options.encoding = 'windows-1251'
-compileTestJava.options.encoding = 'windows-1251'
+javadoc.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
