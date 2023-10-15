@@ -1,3 +1,4 @@
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,6 +28,10 @@ public class ProductPage {
                     "//*[text()=\"Добавить в корзину\"]")
     private static WebElement addToBasketButton;
 
+    // Первый попавшийся размер товара (при наличии выбора размера)
+    @FindBy(css = ".sizes-list__item:nth-child(1)")
+    private static WebElement prodSize;
+
     public int getProdPrice(int prodIndex) {
         wait.until(ExpectedConditions.visibilityOf(prodPrice));
         return Integer.parseInt(prodPrice.getText()
@@ -38,9 +43,17 @@ public class ProductPage {
         return prodName.getText();
     }
 
-    public void addToBasket() {
-        // wait.until(ExpectedConditions.visibilityOf(addToBasketButton));
+    // Если у товара можно выбрать размер, выбираем первый попавшийся
+    public void chooseSize() {
+        try {
+            prodSize.click();
+        } catch (NoSuchElementException ignored) {
+        }
+    }
+
+    public void addToBasket() throws InterruptedException {
         addToBasketButton.click();
+        Thread.sleep(1000);
     }
 
     public void closeProdTab() {

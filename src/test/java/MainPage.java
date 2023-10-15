@@ -29,10 +29,6 @@ public class MainPage {
     // String product = ".goods--1[data-start=\"0\"] [data-index=\"" + prodIndex + "\"]";
 
 
-    public void goToBasket() {
-        toBasketButton.click();
-    }
-
 //    public void chooseProduct(String prodIndex) {
 //        WebElement prod = driver.findElement(By.cssSelector(".goods--1[data-start=\"0\"] " +
 //                "[data-index=\"" + prodIndex + "\"]"));
@@ -63,17 +59,15 @@ public class MainPage {
         driver.switchTo().window(windowHandles.get(1));
     }
 
-    public void closeProdTab() {
-        List<String> windowHandles = new
-                ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(windowHandles.get(1));
+    public void goToBasket() {
+        toBasketButton.click();
     }
 
     /*
      * Следующие методы писал, считая, что смогу получить цену, названия
      * товаров и добавить их в корзину, не выходя с главной страницы.
-     * Но, судя по всему, в корзину так добавить можно только после авторизации.
-     * Удалять их стало жалко, вдруг потом пригодятся.
+     * Но по какой-то причине сделать так получается не всегда: кнопка
+     * "В корзину" не появляется даже при ручном наведении мыши на товар.
      */
     public int getProdPrice(int prodIndex) {
         scrollTo(hits);

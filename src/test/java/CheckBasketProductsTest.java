@@ -29,7 +29,7 @@ public class CheckBasketProductsTest {
 
     @Test
     @DisplayName("Check Bucket Products")
-    public void checkBucketProductsTest() {
+    public void checkBucketProductsTest() throws InterruptedException {
         MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
         ProductPage productPage = PageFactory
                 .initElements(driver, ProductPage.class);
@@ -39,9 +39,11 @@ public class CheckBasketProductsTest {
             mainPage.openProdInNewTab(prodIndex);
             prices[prodIndex] = productPage.getProdPrice(prodIndex);
             names[prodIndex] = productPage.getProdName(prodIndex);
+            productPage.chooseSize();
             productPage.addToBasket();
             productPage.closeProdTab();
         }
+        mainPage.goToBasket();
     }
 
 
