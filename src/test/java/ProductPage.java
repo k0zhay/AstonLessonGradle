@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductPage {
-
     WebDriver driver;
     WebDriverWait wait;
 
@@ -18,35 +17,43 @@ public class ProductPage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+    // Элемент, содержащий текст с названием
     @FindBy(css = ".product-page__header h1")
-    private static WebElement prodName;
+    private static WebElement nameElem;
 
+    // Элемент, содержащий текст со стоимостью
     @FindBy(css = ".product-page__aside .price-block__final-price")
-    private static WebElement prodPrice;
+    private static WebElement priceElem;
 
+    // Кнопка добавления в корзину
     @FindBy(xpath = "//*[@class=\"product-page__aside\"]" +
                     "//*[text()=\"Добавить в корзину\"]")
     private static WebElement addToBasketButton;
 
     // Первый попавшийся размер товара (при наличии выбора размера)
     @FindBy(css = ".sizes-list__item:nth-child(1)")
-    private static WebElement prodSize;
+    private static WebElement sizeElem;
 
-    public int getProdPrice() {
-        wait.until(ExpectedConditions.visibilityOf(prodPrice));
-        return Integer.parseInt(prodPrice.getText()
-                .substring(0, prodPrice.getText().indexOf(' ')));
+    public int getPrice() {
+        wait.until(ExpectedConditions.visibilityOf(priceElem));
+
+        // Записываем ценник до последнего пробела в строке (перед знаком рубля)
+        String price = priceElem.getText()
+                .substring(0, priceElem.getText().lastIndexOf(' '));
+
+        // Не забываем, что у 4-значных ценников стоит лишний пробел
+        return Integer.parseInt(price.replace(" ", ""));
     }
 
     public String getProdName() {
-        wait.until(ExpectedConditions.visibilityOf(prodName));
-        return prodName.getText();
+        wait.until(ExpectedConditions.visibilityOf(nameElem));
+        return nameElem.getText();
     }
 
-    // Если у товара можно выбрать размер, выбираем первый попавшийся
+    // Если у товара нужно выбрать размер, выбираем первый попавшийся
     public void chooseSize() {
         try {
-            prodSize.click();
+            sizeElem.click();
         } catch (NoSuchElementException ignored) {
         }
     }

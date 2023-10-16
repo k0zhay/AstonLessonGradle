@@ -19,9 +19,11 @@ public class MainPage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+    // Кнопка перехода в корзину
     @FindBy(css = ".navbar-pc [href=\"/lk/basket\"]")
     private static WebElement toBasketButton;
 
+    // Блок "Хиты продаж", из которого берем товары
     @FindBy(css = ".goods--1[data-start=\"0\"]")
     private static WebElement hits;
 
@@ -29,7 +31,6 @@ public class MainPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector(".goods--1[data-start=\"0\"]")));
         new Actions(driver).scrollToElement(element).perform();
-        new Actions(driver).scrollByAmount(0, 150).perform();
     }
 
     public void openProdInNewTab(int prodIndex) {
@@ -38,6 +39,7 @@ public class MainPage {
                 By.cssSelector(".goods--1[data-start=\"0\"] [data-index=\"0\"]")));
         WebElement prod = driver.findElement(By.cssSelector(".goods--1[data-start=\"0\"] " +
                 "[data-index=\"" + prodIndex + "\"]"));
+        scrollTo(prod);
         Actions newTab = new Actions(driver);
 
         // Открытие нового окна браузера с выбранным товаром

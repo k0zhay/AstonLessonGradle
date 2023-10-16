@@ -17,12 +17,12 @@ public class CheckBasketProductsTest {
         driver.manage().window().maximize();
     }
 
-    @AfterAll
-    public static void endClass() {
-        driver.manage().deleteAllCookies();
-        driver.quit();
-        System.out.println("End testing\n");
-    }
+//    @AfterAll
+//    public static void endClass() {
+//        driver.manage().deleteAllCookies();
+//        driver.quit();
+//        System.out.println("End testing\n");
+//    }
 
     @Test
     @DisplayName("Check Bucket Products")
@@ -30,13 +30,19 @@ public class CheckBasketProductsTest {
         MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
         ProductPage productPage = PageFactory
                 .initElements(driver, ProductPage.class);
-        int[] prices = new int[3];
-        String[] names = new String[3];
-        int sumPrice = 0;
-        for (int prodIndex = 0; prodIndex < 3; prodIndex++) {
+
+        /*
+         * Можно при необходимости задать количество товаров в пределах 1-7 для
+         * выбранного блока (в нашем случае код для блока "Хиты продаж").
+         */
+        int goodsAmount = 7;
+        int[] prices = new int[goodsAmount];
+        String[] names = new String[goodsAmount];
+        int totalPrice = 0;
+        for (int prodIndex = 0; prodIndex < goodsAmount; prodIndex++) {
             mainPage.openProdInNewTab(prodIndex);
-            prices[prodIndex] = productPage.getProdPrice();
-            sumPrice += prices[prodIndex];
+            prices[prodIndex] = productPage.getPrice();
+            totalPrice += prices[prodIndex];
             names[prodIndex] = productPage.getProdName();
             productPage.chooseSize();
             productPage.addToBasket();
@@ -56,7 +62,12 @@ public class CheckBasketProductsTest {
                 .initElements(driver, BasketPage.class);
         int[] pricesInBasket = basketPage.getProdPrices();
         String[] namesInBasket = basketPage.getProdNames();
-        int actualSumPrice = basketPage.getSumPrice();
-
+        int totalPriceInBasket = basketPage.getTotalPrice();
+        int finalTotalPrice = totalPrice;
+        Assertions.assertAll(
+                () -> Assertions.assertArrayEquals(prices, pricesInBasket),
+                () -> Assertions.assertArrayEquals(names, namesInBasket),
+                () -> Assertions.assertEquals(finalTotalPrice, totalPriceInBasket)
+        );
     }
 }
