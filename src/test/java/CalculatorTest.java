@@ -1,47 +1,36 @@
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.remote.AndroidMobileCapabilityType;
-import io.appium.java_client.remote.MobileCapabilityType;
-import org.junit.jupiter.api.BeforeEach;
+import io.appium.java_client.android.AndroidElement;
+import org.KozhaevSA.Apps.Calculator.CalculatorInstallation;
+import org.KozhaevSA.MobileDriver;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 public class CalculatorTest {
-    AndroidDriver driver;
-    DesiredCapabilities capabilities;
+    public static AndroidDriver<AndroidElement> driver;
+    static final String RESOURCE_PATH = "C:\\Users\\kozha\\Desktop";
+    //    static final String NAME_OF_APK = "Calculator_13.1.28.apk";
+//    static final String NAME_OF_PACKAGE = "com.miui.calculator";
+//    static final String CALCULATOR_ACTIVITY = ".cal.CalculatorActivity";
+    static final String NAME_OF_APK = "Calculator_8.4.1.apk";
+    static final String NAME_OF_PACKAGE = "com.google.android.calculator";
+    static final String CALCULATOR_ACTIVITY = "com.android.calculator2.Calculator";
 
-    @BeforeEach
+    @Test
     public void setUp() {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
+        driver = MobileDriver.getDriver();
+        CalculatorInstallation.isCalculatorInstalled();
+        CalculatorInstallation.calculatorInstallation();
 
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME,
-                              "Pixel 7 Pro API 34");
-        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE,
-                              "src/test/resources/Calculator_8.4.1.apk");
-        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,
-                              "cal.CalculatorActivity");
-        capabilities.setCapability(MobileCapabilityType.NO_RESET,true);
 
-        try {
-            driver = new AndroidDriver(new
-                     URL("http://127.0.0.0:4723/wd/hub"),capabilities);
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        } catch (MalformedURLException e) {
-            System.out.println(e.getMessage());
-        }
+//        CalculatorElements calc = new CalculatorElements();
+//        calc.caclulator();
+//        calc.one();
+        //plus(); two(); equal();
+
+
     }
 
     @Test
-    public void test() {
-        try {
-            driver = new AndroidDriver(new
-                    URL("http://127.0.0.0:4723/wd/hub"), capabilities);
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        } catch (MalformedURLException e) {
-            System.out.println(e.getMessage());
-        }
+    public void addition_isCorrect() {
+
     }
 }
