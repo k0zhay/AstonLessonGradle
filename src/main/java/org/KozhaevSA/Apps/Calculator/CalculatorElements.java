@@ -9,7 +9,7 @@ public class CalculatorElements {
     private static AndroidDriver<AndroidElement> driver;
 
     @FindBy(id = "com.google.android.calculator:id/main_calculator")
-    private AndroidElement calculatorMain;
+    private static AndroidElement calculatorMain;
 
 
 
@@ -28,60 +28,60 @@ public class CalculatorElements {
     private static AndroidElement twoBtn;
 
     @FindBy(id = "com.google.android.calculator:id/digit_3")
-    private AndroidElement threeBtn;
+    private static AndroidElement threeBtn;
 
     @FindBy(id = "com.google.android.calculator:id/digit_4")
-    private AndroidElement fourBtn;
+    private static AndroidElement fourBtn;
 
     @FindBy(id = "com.google.android.calculator:id/digit_5")
-    private AndroidElement fiveBtn;
+    private static AndroidElement fiveBtn;
 
     @FindBy(id = "com.google.android.calculator:id/digit_6")
-    private AndroidElement sixBtn;
+    private static AndroidElement sixBtn;
 
     @FindBy(id = "com.google.android.calculator:id/digit_7")
-    private AndroidElement sevenBtn;
+    private static AndroidElement sevenBtn;
 
     @FindBy(id = "com.google.android.calculator:id/digit_8")
-    private AndroidElement eightBtn;
+    private static AndroidElement eightBtn;
 
     @FindBy(id = "com.google.android.calculator:id/digit_9")
-    private AndroidElement nineBtn;
+    private static AndroidElement nineBtn;
 
     @FindBy(id = "com.google.android.calculator:id/op_add")
     private static AndroidElement plusBtn;
 
     @FindBy(id = "com.google.android.calculator:id/op_sub")
-    private AndroidElement minusBtn;
+    private static AndroidElement minusBtn;
 
     @FindBy(id = "com.google.android.calculator:id/op_mul")
-    private AndroidElement multiplyBtn;
+    private static AndroidElement multiplyBtn;
 
     @FindBy(id = "com.google.android.calculator:id/op_div")
-    private AndroidElement divideBtn;
+    private static AndroidElement divideBtn;
 
     @FindBy(id = "com.google.android.calculator:id/eq")
     private static AndroidElement equalBtn;
 
     @FindBy(id = "com.miui.calculator:id/expression")
-    private AndroidElement expressionBtn;
+    private static AndroidElement expressionBtn;
 
     @FindBy(id = "com.google.android.calculator:id/result_final")
     private static AndroidElement resultBtn;
 
     @FindBy(id = "com.miui.calculator:id/btn_c_s")
-    private AndroidElement clearBtn;
+    private static AndroidElement clearBtn;
 
 //    public WebElement waitVisibility(AndroidDriver<AndroidElement> driver, AndroidElement element) {
 //        return new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(element));
 //    }
 
-    public void caclulator() {
+    public static void caclulator() {
         //waitVisibility(driver, caclulatorMain);
         calculatorMain.click();
     }
 
-    public void one() {
+    public static void one() {
         //waitVisibility(driver, oneBtn);
         oneBtn.click();
     }

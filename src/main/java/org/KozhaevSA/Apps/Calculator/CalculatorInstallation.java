@@ -26,6 +26,13 @@ public class CalculatorInstallation {
         try {
             Runtime.getRuntime().exec("adb install " + RESOURCE_PATH + "\\" + NAME_OF_APK);
             Thread.sleep(20000);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void calculatorStart() {
+        try {
             Runtime.getRuntime().exec("adb shell am start -n "
                     + NAME_OF_PACKAGE + "/" + CALCULATOR_ACTIVITY);
             Thread.sleep(20000);
