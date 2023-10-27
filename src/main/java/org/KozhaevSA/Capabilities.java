@@ -8,7 +8,6 @@ public class Capabilities {
         capabilities.setCapability("platformName","Android");
         capabilities.setCapability("deviceName","Emulator");
         capabilities.setCapability("BROWSER_NAME","Android");
-        capabilities.setCapability("newCommandTimeout","500");
         return capabilities;
     }
 }
