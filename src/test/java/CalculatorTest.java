@@ -41,10 +41,6 @@ public class CalculatorTest {
         driver.findElement(By.id("com.google.android.calculator:id/clr")).click();
     }
 
-    /*
-     * Тестирование, конечно, неполное, но я и так ни в какие сроки не
-     * уложился, поэтому приходится обходиться основными операциями
-     */
     @Test
     @DisplayName("Addition Test")
     @Description("Adding Two Numbers")
