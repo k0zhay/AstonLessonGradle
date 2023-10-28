@@ -1,22 +1,24 @@
-/*
- * Я полностью отдаю себе отчет в том, что это худшее моё ДЗ, и здесь по сути
- * не используются знания, накопленные в прошлых уроках, которые тогда успешно
- * (более-менее) применялись. К сожалению, у меня нет ни времени, ни
- * возможности привести эту работу к приемлемому виду
- * Прошу прощения за такое решение "в лоб"
- */
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
-
+import static org.KozhaevSA.Apps.Calculator.CalculatorLauncher.clickAt;
+import static org.KozhaevSA.Apps.Calculator.CalculatorLauncher.getResult;
 import org.KozhaevSA.Apps.Calculator.CalculatorLauncher;
 import org.KozhaevSA.MobileDriver;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 
+@Owner("Kozhaev")
+@Epic("Calculating Valid Numbers")
 public class CalculatorTest {
     public static AndroidDriver<AndroidElement> driver;
 
@@ -44,6 +46,9 @@ public class CalculatorTest {
      * уложился, поэтому приходится обходиться основными операциями
      */
     @Test
+    @DisplayName("Addition Test")
+    @Description("Adding Two Numbers")
+    @Severity(SeverityLevel.CRITICAL)
     public void plusTest() {
         clickAt("com.google.android.calculator:id/digit_1");
         clickAt("com.google.android.calculator:id/op_add");
@@ -53,6 +58,9 @@ public class CalculatorTest {
     }
 
     @Test
+    @DisplayName("Difference Test")
+    @Description("Difference Of Two Numbers")
+    @Severity(SeverityLevel.CRITICAL)
     public void minusTest() {
         clickAt("com.google.android.calculator:id/digit_2");
         clickAt("com.google.android.calculator:id/op_sub");
@@ -62,6 +70,9 @@ public class CalculatorTest {
     }
 
     @Test
+    @DisplayName("Multiplication Test")
+    @Description("Multiplication Of Two Numbers")
+    @Severity(SeverityLevel.CRITICAL)
     public void multiplyTest() {
         clickAt("com.google.android.calculator:id/digit_2");
         clickAt("com.google.android.calculator:id/op_mul");
@@ -71,21 +82,14 @@ public class CalculatorTest {
     }
 
     @Test
+    @DisplayName("Division Test")
+    @Description("Dividing One Number By Another")
+    @Severity(SeverityLevel.CRITICAL)
     public void divideTest() {
         clickAt("com.google.android.calculator:id/digit_2");
         clickAt("com.google.android.calculator:id/op_div");
         clickAt("com.google.android.calculator:id/digit_1");
         clickAt("com.google.android.calculator:id/eq");
         Assertions.assertEquals("2", getResult());
-    }
-
-    public void clickAt(String id) {
-        driver.findElement(By.id(id)).click();
-    }
-
-    public String getResult() {
-        return driver.findElement(
-                By.id("com.google.android.calculator:id/result_final"))
-                .getAttribute("text");
     }
 }
