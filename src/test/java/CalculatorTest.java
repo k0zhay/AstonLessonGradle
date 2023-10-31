@@ -15,10 +15,7 @@ public class CalculatorTest {
         CalculatorInstallation.calculatorInstallation();
         CalculatorInstallation.calculatorStart();
 
-
-        CalculatorElements.caclulator();
         CalculatorElements.one();
-
 
     }
 
